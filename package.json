@@ -1,0 +1,10 @@
+{
+  "name": "fis_api",
+  "version": "0.1.0",
+  "main": "index.js",
+  "author": "milafrerichs <mila.frerichs@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "wfs_query": "^0.2.0"
+  }
+}

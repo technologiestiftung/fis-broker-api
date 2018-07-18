@@ -1,0 +1,20 @@
+service: berlin-fis-api
+
+provider:
+  name: aws
+  runtime: nodejs8.10
+  profile: prototypefund
+  region: eu-central-1
+
+#package:
+#  include:
+#    - include-me.js
+#    - include-me-dir/**
+#  exclude:
+#    - exclude-me.js
+#    - exclude-me-dir/**
+
+functions:
+  getInfo:
+    handler: handler.getInfo
+
