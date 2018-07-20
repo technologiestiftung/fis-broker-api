@@ -11,7 +11,7 @@ var getWFSInfo = function(wfsUrl) {
   return new Promise(function(resolve, reject) {
     try {
       wfs.getInfo(wfsUrl).then(function(result) {
-        if(result) {
+        if(result && result.length > 0) {
           result.url = wfsUrl;
           resolve(result);
         }
@@ -41,7 +41,7 @@ var tryOutOptionsForLayerName = function(layerName) {
 var createResponse = function(info) {
     let response;
 
-    if(info && info.layerName) {
+    if(info && info.length > 0) {
       response = {
         statusCode: 200,
         body: JSON.stringify(info),
@@ -56,12 +56,12 @@ var createResponse = function(info) {
 };
 
 module.exports.getInfo = (event, context, callback) => {
-  const layerName = event['layer_name'] || event['pathParameters']['layer_name'];
+  const layerName = event['layer_name'];
   if (event['url']) {
     getWFSInfo(event['url']).then(function(info) {
       callback(null, createResponse(info));
     });
-  }else {
+  } else {
     tryOutOptionsForLayerName(layerName).then(function(info) {
       callback(null, createResponse(info));
     });

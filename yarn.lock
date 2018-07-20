@@ -2,6 +2,10 @@
 # yarn lockfile v1
 
 
+amdefine@0.x.x:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/amdefine/-/amdefine-0.1.1.tgz#b5c75c532052dccd6a39c0064c772c8d57a06cd2"
+
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
@@ -90,6 +94,14 @@ jasmine-reporters@~1.0.0:
   dependencies:
     mkdirp "~0.3.5"
 
+jsonix@>=2.4.0, jsonix@^2.4.1:
+  version "2.4.1"
+  resolved "https://registry.yarnpkg.com/jsonix/-/jsonix-2.4.1.tgz#7ca914a85a369f27b30f13cc0c15a2258b894b33"
+  dependencies:
+    amdefine "0.x.x"
+    xmldom ">=0.1.21"
+    xmlhttprequest "1.x.x"
+
 lodash@~4.17.10:
   version "4.17.10"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.10.tgz#1b7793cf7259ea38fb3661d4d38b3260af8ae4e7"
@@ -107,6 +119,13 @@ mkdirp@~0.3.5:
 node-fetch@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-2.1.2.tgz#ab884e8e7e57e38a944753cec706f788d1768bb5"
+
+ogc-schemas@^2.6.1:
+  version "2.6.1"
+  resolved "https://registry.yarnpkg.com/ogc-schemas/-/ogc-schemas-2.6.1.tgz#0834b00d8038f56fedd206467f34c130e9976f92"
+  dependencies:
+    jsonix ">=2.4.0"
+    w3c-schemas ">=1.4.0"
 
 once@^1.3.0:
   version "1.4.0"
@@ -130,16 +149,25 @@ sax@>=0.6.0:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/underscore/-/underscore-1.9.1.tgz#06dce34a0e68a7babc29b365b8e74b8925203961"
 
+w3c-schemas@>=1.4.0, w3c-schemas@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/w3c-schemas/-/w3c-schemas-1.4.0.tgz#f4dafe92d97af56a99b3faa1520f592df2998428"
+  dependencies:
+    jsonix ">=2.4.0"
+
 "walkdir@>= 0.0.1":
   version "0.0.12"
   resolved "https://registry.yarnpkg.com/walkdir/-/walkdir-0.0.12.tgz#2f24f1ade64aab1e458591d4442c8868356e9281"
 
-wfs_query@^0.1.0:
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/wfs_query/-/wfs_query-0.1.0.tgz#1c1daed54e6b6a36e4e9305cf3e0a6091ff4b23e"
+wfs_query@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/wfs_query/-/wfs_query-0.2.2.tgz#04e80b731635f0bdd8d2a8ea0e36c6cd503f90f1"
   dependencies:
     jasmine-node "^1.15.0"
+    jsonix "^2.4.1"
     node-fetch "^2.1.2"
+    ogc-schemas "^2.6.1"
+    w3c-schemas "^1.4.0"
     xml2js "^0.4.19"
 
 wrappy@1:
@@ -156,3 +184,11 @@ xml2js@^0.4.19:
 xmlbuilder@~9.0.1:
   version "9.0.7"
   resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-9.0.7.tgz#132ee63d2ec5565c557e20f4c22df9aca686b10d"
+
+xmldom@>=0.1.21:
+  version "0.1.27"
+  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
+
+xmlhttprequest@1.x.x:
+  version "1.8.0"
+  resolved "https://registry.yarnpkg.com/xmlhttprequest/-/xmlhttprequest-1.8.0.tgz#67fe075c5c24fef39f9d65f5f7b7fe75171968fc"
