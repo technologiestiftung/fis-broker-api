@@ -5,6 +5,6 @@
   "author": "milafrerichs <mila.frerichs@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "wfs_query": "^0.2.0"
+    "wfs_query": "^0.2.2"
   }
 }
