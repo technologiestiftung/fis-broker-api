@@ -20,31 +20,41 @@ var createResponse = function(info) {
     return response;
 };
 
-var getInfoHandler = (event, context, callback) => {
+var getInfoHandler = async (event) => {
   const layerName = event['layer_name'];
-  if (event['url']) {
-    getWFSInfo(event['url']).then(function(info) {
-      callback(null, createResponse(info));
-    });
-  } else {
-    tryOutOptionsForLayerName(layerName).then(function(info) {
-      callback(null, createResponse(info));
-    });
+  let info;
+  try {
+    if (event['url']) {
+      info = await getWFSInfo(event['url']);
+    } else {
+      info = await tryOutOptionsForLayerName(layerName);
+    }
+  } catch (err) {
+      console.log(err);
+      return err;
   }
+  return(createResponse(info));
 };
-var getDownloadHandler = (event, context, callback) => {
+
+var getDownloadHandler = async (event) => {
   const layerName = event['layer_name'];
   const layerTypeName = event['layer_type'];
-  downloadGeoJson(layerName, layerTypeName).then(function(result) {
-    callback(null, {
-      statusCode: 200,
-      body: JSON.stringify(result),
-    });
-  });
+  let result;
+  try {
+    result = await downloadGeoJson(layerName, layerTypeName);
+  }
+  catch (err) {
+      console.log(err);
+      return err;
+  }
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/octet-stream', 'Content-Disposition': 'attachment;filename='+layerName+'.geojson' },
+    body: JSON.stringify(result)
+  }
 };
 
 module.exports = {
   getInfo: getInfoHandler,
   download: getDownloadHandler
 }
-
