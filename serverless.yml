@@ -1,3 +1,4 @@
+// need gdal/ogr2ogr in the lambda
 service: berlin-fis-api
 
 provider:
@@ -9,6 +10,7 @@ provider:
 package:
   include:
     - handler.js
+    - convert.js
     - info.js
     - utils.js
     - download.js

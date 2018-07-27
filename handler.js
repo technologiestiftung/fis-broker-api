@@ -1,7 +1,7 @@
 'use strict';
 
 const { getWFSInfo, tryOutOptionsForLayerName } = require('./info.js');
-const { downloadGeoJson } = require('./download.js');
+const { downloadGeoJson, generateShapefileResponse, generateGeoJsonResponse } = require('./download.js');
 
 var createResponse = function(info) {
     let response;
@@ -37,21 +37,21 @@ var getInfoHandler = async (event) => {
 };
 
 var getDownloadHandler = async (event) => {
-  const layerName = event['layer_name'];
-  const layerTypeName = event['layer_type'];
+  const params = event.queryStringParameters;
+  const layerName = params['layer_name'];
+  const layerTypeName = params['layer_type'];
+  const format = params['format'];
   let result;
   try {
     result = await downloadGeoJson(layerName, layerTypeName);
+  } catch (err) {
+    console.log(err);
+    return err;
   }
-  catch (err) {
-      console.log(err);
-      return err;
+  if (format === 'shapefile') {
+    return await generateShapefileResponse(layerName, result);
   }
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'application/octet-stream', 'Content-Disposition': 'attachment;filename='+layerName+'.geojson' },
-    body: JSON.stringify(result)
-  }
+  return await generateGeoJsonResponse(layerName, result);
 };
 
 module.exports = {
