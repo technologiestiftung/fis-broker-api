@@ -1,42 +1,7 @@
 'use strict';
 
-var wfs = require('wfs_query');
-
-var baseUrl = 'http://fbinter.stadt-berlin.de/fb/wfs';
-var folderOptions = ['data', 'geometry'];
-var wfsOptions = ['senstadt'];
-
-
-var getWFSInfo = function(wfsUrl) {
-  return new Promise(function(resolve, reject) {
-    try {
-      wfs.getInfo(wfsUrl).then(function(result) {
-        if(result && result.length > 0) {
-          result.url = wfsUrl;
-          resolve(result);
-        }
-      }).catch(function(e) {
-        console.log(e);
-      });
-    } catch(e) {
-      console.log(e);
-    }
-  });
-};
-
-var tryOutOptionsForLayerName = function(layerName) {
-  return new Promise(function(resolve, reject) {
-    folderOptions.forEach(function(folder) {
-      wfsOptions.forEach(function(wfsOption) {
-        var wfsUrl = baseUrl+'/'+folder+'/'+wfsOption+'/'+layerName;
-        getWFSInfo(wfsUrl).then(function(result) {
-          resolve(result);
-        }).catch(function(e) {
-        });
-      });
-    });
-  });
-};
+const { getWFSInfo, tryOutOptionsForLayerName } = require('./info.js');
+const { downloadGeoJson } = require('./download.js');
 
 var createResponse = function(info) {
     let response;
@@ -55,15 +20,41 @@ var createResponse = function(info) {
     return response;
 };
 
-module.exports.getInfo = (event, context, callback) => {
+var getInfoHandler = async (event) => {
   const layerName = event['layer_name'];
-  if (event['url']) {
-    getWFSInfo(event['url']).then(function(info) {
-      callback(null, createResponse(info));
-    });
-  } else {
-    tryOutOptionsForLayerName(layerName).then(function(info) {
-      callback(null, createResponse(info));
-    });
+  let info;
+  try {
+    if (event['url']) {
+      info = await getWFSInfo(event['url']);
+    } else {
+      info = await tryOutOptionsForLayerName(layerName);
+    }
+  } catch (err) {
+      console.log(err);
+      return err;
+  }
+  return(createResponse(info));
+};
+
+var getDownloadHandler = async (event) => {
+  const layerName = event['layer_name'];
+  const layerTypeName = event['layer_type'];
+  let result;
+  try {
+    result = await downloadGeoJson(layerName, layerTypeName);
+  }
+  catch (err) {
+      console.log(err);
+      return err;
+  }
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/octet-stream', 'Content-Disposition': 'attachment;filename='+layerName+'.geojson' },
+    body: JSON.stringify(result)
   }
 };
+
+module.exports = {
+  getInfo: getInfoHandler,
+  download: getDownloadHandler
+}

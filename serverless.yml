@@ -6,15 +6,20 @@ provider:
   profile: prototypefund
   region: eu-central-1
 
-#package:
-#  include:
-#    - include-me.js
-#    - include-me-dir/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+package:
+  include:
+    - handler.js
+    - info.js
+    - utils.js
+    - download.js
+    - package.json
+    - yarn.lock
 
 functions:
   getInfo:
     handler: handler.getInfo
+  download:
+    handler: handler.download
+    memorySize: 1536
+    timeout: 20
 
