@@ -4,7 +4,15 @@
   "main": "index.js",
   "author": "milafrerichs <mila.frerichs@gmail.com>",
   "license": "MIT",
+	"binary": {
+    "module_name": "gdal",
+    "module_path": "./lib/binding/{node_abi}-{platform}-{arch}",
+    "remote_path": "./{module_name}/v{version}/{toolset}/",
+    "host": "https://mapbox-node-binary.s3.amazonaws.com",
+    "package_name": "{node_abi}-{platform}-{arch}.tar.gz"
+  },
   "dependencies": {
+    "gdal": "^0.9.7",
     "ogr2ogr": "^1.2.1",
     "wfs_query": "^0.2.2"
   }

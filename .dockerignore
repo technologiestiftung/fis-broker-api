@@ -1,0 +1,8 @@
+node_modules
+yarn.lock
+serverless.yml
+local.js
+index.js
+api.json
+package.zip
+package

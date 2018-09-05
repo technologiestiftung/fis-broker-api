@@ -1,4 +1,3 @@
-// need gdal/ogr2ogr in the lambda
 service: berlin-fis-api
 
 provider:
@@ -8,20 +7,13 @@ provider:
   region: eu-central-1
 
 package:
-  include:
-    - handler.js
-    - convert.js
-    - info.js
-    - utils.js
-    - download.js
-    - package.json
-    - yarn.lock
+  artifact: package.zip
 
 functions:
   getInfo:
     handler: handler.getInfo
   download:
     handler: handler.download
-    memorySize: 1536
-    timeout: 20
+    memorySize: 3008
+    timeout: 30
 

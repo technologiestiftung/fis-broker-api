@@ -1,4 +1,8 @@
-var ogr2ogr = require('ogr2ogr')
+process.env["PATH"] = process.env["PATH"] + ":" + process.env["LAMBDA_TASK_ROOT"]+ "/lib/";
+
+console.log(process.env)
+
+var ogr2ogr = require('ogr2ogr');
 
 const toShapefile = (data) => {
   return new Promise(function(resolve, reject) {
@@ -15,4 +19,4 @@ const toShapefile = (data) => {
 
 module.exports = {
   toShapefile: toShapefile
-}
+};
