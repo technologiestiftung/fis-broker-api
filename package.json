@@ -2,9 +2,12 @@
   "name": "fis_api",
   "version": "0.1.0",
   "main": "index.js",
+  "description": "API to Berlin's FIS Broker",
+  "repository": "https://github.com/milafrerichs/fis-broker-api.git",
   "author": "milafrerichs <mila.frerichs@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "rate-limiter-flexible": "^0.22.1",
     "wfs_query": "^0.2.2"
   }
 }
