@@ -7,3 +7,4 @@ jspm_packages
 
 # serverless config > there is a sample config
 serverless.yml
+.DS_Store
